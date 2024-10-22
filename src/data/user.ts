@@ -1,6 +1,6 @@
-const user = {
+export const user = {
     "name": "Mike",
-    "email": "mike1@gmail.com",
+    "email": "mike10@gmail.com",
     "password": "pass1234",
-    "password{Confirm": "pass1234"
+    "passwordConfirm": "pass1234"
 }
