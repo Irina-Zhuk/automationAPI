@@ -1,6 +1,6 @@
 import * as supertest from 'supertest'
-import {post} from '../data/post';
-import {user} from "../data/user";
+import {post, postFaker} from '../data/post';
+
 const request  = supertest ('https://jsonplaceholder.typicode.com/')
 describe ('CREATE POST', () => {
     it ('Create a new post', async() => {
@@ -17,7 +17,7 @@ describe ('CREATE POST', () => {
         expect(res.body.userId).toBe(202)
         console.log (res.body, 'res')
     })
-    it ('Create a new post', async() => {
+    it('Create a new post', async() => {
         const res = await request.post ('/posts')
             .send (post)
             .expect(201)
@@ -25,5 +25,15 @@ describe ('CREATE POST', () => {
         expect(res.body.body).toBe('Just test')
         expect(res.body.userId).toBe(205)
         console.log (res.body, 'res')
+    })
+    it ('Create a new post using faker', async() => {
+        const res = await request.post ('/posts')
+            .send (postFaker)
+            .expect(201)
+        console.log (res.body, 'res')
+        expect(res.body.userId).toBe(postFaker.userId)
+        // expect(res.body.title).toBe(postFaker.title)
+        // expect(res.body.body).toBe(postFaker.body)
+
     })
 })
