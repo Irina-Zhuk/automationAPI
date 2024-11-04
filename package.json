@@ -5,7 +5,8 @@
   "scripts": {
     "signUp": "npx jest signUp.spec.ts",
     "signUp1": "npx jest post.spec.ts",
-    "logIn": "npx jest login.spec.ts"
+    "logIn": "npx jest login.spec.ts",
+    "logIn2": "npx jest login2.spec.ts"
   },
   "keywords": [],
   "author": "",
