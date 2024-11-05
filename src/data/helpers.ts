@@ -16,6 +16,10 @@ export function signUp(user:object): Promise<any> {
             });
         });
 }
+
+
+
+
 //advanced level
 // export async function logIn(user:string | object | undefined){
 //     await request.post('/users/login').send(user)
@@ -30,4 +34,23 @@ export function logIn(user:object): Promise<any> {
                 else resolve(res);
             });
     });
+}
+
+
+export function deleteFunction(cookie:string): Promise<any> {
+    return new Promise ((resolve, reject) => {
+        request
+            .delete('/users/deleteMe')
+            .set ("Cookie", cookie)
+            .end((err, res) => {
+                if (err) return reject(err);
+                else resolve(res);
+            });
+    });
+}
+
+//то же самое в более простом варианте
+
+export function deleteFunction2(cookie:string) {
+    return  request.post('/users/deleteMe').set("Cookie", cookie)
 }
