@@ -83,12 +83,13 @@ describe('USER LOGIN', () => {
             deleteFunction2("123").end ((err,res) => {
                 if(err) return done (err)
                 expect (res.body.status).toBe('fail');
+                expect (res.body.massage).toBe(undefined)
                 done()
             })
         })
 
 
-        it('cannot delete user with empty token - option 1', async () => {
+        it('cannot delete user with empty token - option 1 using async/await', async () => {
             let reslogin = await logIn({
                 email: userImport.email,
                 password : userImport.password,

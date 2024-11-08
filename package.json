@@ -6,7 +6,8 @@
     "signUp": "npx jest signUp.spec.ts",
     "signUp1": "npx jest post.spec.ts",
     "logIn": "npx jest login.spec.ts",
-    "logIn2": "npx jest login2.spec.ts"
+    "logIn2": "npx jest login2.spec.ts",
+    "mongo": "npx jest mongo.spec.ts"
   },
   "keywords": [],
   "author": "",
@@ -20,6 +21,7 @@
   },
   "dependencies": {
     "@types/jest": "^29.5.13",
-    "@types/supertest": "^6.0.2"
+    "@types/supertest": "^6.0.2",
+    "mongodb": "^6.10.0"
   }
 }

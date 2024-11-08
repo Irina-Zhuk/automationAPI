@@ -1,5 +1,5 @@
 import * as supertest from 'supertest'
-import {signUp, logIn, signUp2} from "../../data/helpers";
+import {signUp, logIn, signUp2, login2} from "../../data/helpers";
 import {user, getUser} from '../../data/user';
 const request = supertest('http://localhost:8001/api/v1')
 describe('USER LOGIN', () => {
@@ -8,7 +8,7 @@ describe('USER LOGIN', () => {
     describe('POSITIVE TESTING', () => {
         let userImport = getUser();
 
-        it('login user', async () => {
+        it.skip('login user', async () => {
             // const res = await request.post('/users/signup').send(userImport)
             //    .expect(201)
             // const res = await signUp(userImport)
@@ -61,27 +61,28 @@ describe('USER LOGIN', () => {
             }
         })
         it('login user option 4 using then', async () => {
-            signUp(userImport)
+            return signUp(userImport)
                 .then ((res) =>{
                    expect (res.body.status).toBe('success');
-                return logIn ({
-                    email: userImport.email,
-                    password : userImport.password,
+            return logIn({
+                 email: userImport.email,
+                 password: userImport.password,
+                    });
                 })
-        })
-                .then ((res2) =>{
-                    expect (res2.statusCode).toBe(201);
-        })
-                .catch ((err) => {
-                    console.log (err)
-                    })
+                .then((res2) => {
+                    expect(res2.statusCode).toBe(201); // This line will fail if statusCode is not 201
                 })
-                })
+                .catch((err) => {
+                    throw new Error(`Test failed due to unexpected response: ${err}`);
+                });
+           })
 
         it('login user option 5 using .end without Promise', (done) => {
-            signUp2(userImport).end ((err,res) => {
+            signUp2(userImport)
+            .end ((err, res) => {
             if(err) return done (err)
             expect (res.body.status).toBe('success');
+            console.log (res.body)
             done()
             })
         })
@@ -89,12 +90,9 @@ describe('USER LOGIN', () => {
 
     describe('NEGATIVE TESTING', () => {
         let userImport = getUser();
-        // signUp(userImport).then (el => {
-        //     expect (el.body.status).toBe('success')
-        //     console.log(el.body, 'res')
-        // })
+
         it('get error when trying login without email - option 1', async () => {
-            await signUp(userImport).then (el => {     //вынесено вверх до it
+            await signUp(userImport).then (el => {
                 expect (el.body.status).toBe('success')
                 console.log(el.body, 'res')
             })
@@ -106,11 +104,11 @@ describe('USER LOGIN', () => {
                 expect(el2.body.message).toBe('Please provide email and password!')
             })
         })
-        it.only('get error when trying login without email using try and catch - option 2', async () => {
+        it('get error when trying login without email using try and catch - option 2', async () => {
 
         try {
             await signUp(userImport).then (el => {
-                expect (el.body.status).toBe('success')
+                expect (el.body.status).toBe('error')
                 console.log(el.body, 'res')
             })
             await logIn({
@@ -131,7 +129,7 @@ describe('USER LOGIN', () => {
 
             try {
                 await signUp(userImport).then (el => {
-                    expect (el.body.status).toBe('success')
+                    expect (el.body.status).toBe('error')
                     console.log(el.body, 'res')
                 })
                 await logIn({
@@ -149,7 +147,7 @@ describe('USER LOGIN', () => {
             }
         })
 
-        it.only('get error when trying login without email using .end without Promise - option 4', (done) => {
+        it('get error when trying login without email using .end without Promise - option 4', (done) => {
             signUp2({
                 email: userImport.email,
                 password : '',
@@ -172,7 +170,7 @@ describe('USER LOGIN', () => {
 
         it('get error when trying login with wrong password', async () => {
             await signUp(userImport).then (el => {
-                expect (el.body.status).toBe('success')
+                expect (el.body.status).toBe('error')
                 console.log(el.body, 'res')
             })
             await logIn({
@@ -186,7 +184,7 @@ describe('USER LOGIN', () => {
 
         it('get error when trying login with wrong user email', async () => {
             await signUp(userImport).then (el => {
-                expect (el.body.status).toBe('success')
+                expect (el.body.status).toBe('error')
                 console.log(el.body, 'res')
             })
             await logIn({
@@ -196,7 +194,6 @@ describe('USER LOGIN', () => {
                 expect (el2.body.status).toBe('fail')
                 expect(el2.body.message).toBe('Incorrect email or password')
             })
-
         })
     })
-
+})

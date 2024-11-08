@@ -4,6 +4,9 @@ const request = supertest('http://localhost:8001/api/v1')
 export function signUp2(user:string | object | undefined) {
     return  request.post('/users/signup').send(user)
 }
+
+
+
 // beginner level
 export function signUp(user:object): Promise<any> {
         return new Promise ((resolve, reject) => {
@@ -53,4 +56,7 @@ export function deleteFunction(cookie:string): Promise<any> {
 
 export function deleteFunction2(cookie:string) {
     return  request.post('/users/deleteMe').set("Cookie", cookie)
+}
+export function login2(user:string | object | undefined) {
+    return request.post('/users/login').send(user)
 }
