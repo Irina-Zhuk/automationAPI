@@ -18,8 +18,9 @@ describe('USER LOGIN', () => {
                 console.log(response.body)
                 expect (response.body.status).toBe('success')
                 expect (response.body.data.user.role).toBe('user')
+                expect (response.body.data.user.email).toBe(userImport.email.toLowerCase())
             })
-    })
+        })
         it('delete user', async () => {
             let reslogin = await logIn({
                 email: userImport.email,
@@ -30,7 +31,7 @@ describe('USER LOGIN', () => {
                 expect (reslogin.body.data.user.role).toBe('user')
                 cookie = reslogin.headers['set-cookie']
                 const deleteData = await deleteFunction(cookie[0])
-            console.log(deleteData)
+                console.log(deleteData)
                 expect (deleteData.body.status).toBe('success')
                 expect (deleteData.body.massage).toBe('User deleted successfully')
             })
@@ -42,20 +43,24 @@ describe('USER LOGIN', () => {
         beforeEach (async() => {
             await signUp(userImport)
         })
-        it('cannot delete user with invalid token - option 1', async () => {
-            let reslogin = await logIn({
-                email: userImport.email,
-                password : userImport.password,
+        it('cannot delete user with invalid token - option 1',
+            async () => {
+                let reslogin = await logIn({
+                    email: userImport.email,
+                    password: userImport.password,
+                })
+                console.log(reslogin)
+                expect(reslogin.body.status).toBe('success')
+                expect(reslogin.body.data.user.role).toBe('user')
+                cookie = reslogin.headers['set-cookie']
+                const deleteData = await deleteFunction("123")
+                console.log(deleteData)
+                expect(deleteData.body.status).toBe('fail')
+                expect(deleteData.body.message).toBe("You are not logged in! Please log in to get access.")
+
+                expect (reslogin.body.data.user.role).toBe('user')
+                expect (reslogin.body.data.user.email).toBe(userImport.email.toLowerCase())
             })
-            console.log(reslogin)
-            expect (reslogin.body.status).toBe('success')
-            expect (reslogin.body.data.user.role).toBe('user')
-            cookie = reslogin.headers['set-cookie']
-            const deleteData = await deleteFunction("123")
-            console.log(deleteData)
-            expect (deleteData.body.status).toBe('fail')
-            expect (deleteData.body.massage).toBe(undefined)
-        })
 
         it('cannot delete user with invalid token - option 2 - using try and catch', async () => {
             try {
@@ -70,7 +75,7 @@ describe('USER LOGIN', () => {
 
             await deleteFunction("123").then (el2 => {
                  expect (el2.body.status).toBe('fail')
-                 expect (el2.body.massage).toBe(undefined)
+                 expect (el2.body.message).toBe('You are not logged in! Please log in to get access.')
                 })
             }
             catch (error) {
@@ -83,8 +88,9 @@ describe('USER LOGIN', () => {
             deleteFunction2("123").end ((err,res) => {
                 if(err) return done (err)
                 expect (res.body.status).toBe('fail');
-                expect (res.body.massage).toBe(undefined)
+                expect (res.body.message).toBe("You are not logged in! Please log in to get access.")
                 done()
+
             })
         })
 
@@ -101,7 +107,13 @@ describe('USER LOGIN', () => {
             const deleteData = await deleteFunction("")
             console.log(deleteData)
             expect (deleteData.body.status).toBe('fail')
-            expect (deleteData.body.massage).toBe(undefined)
+            expect (deleteData.body.message).toBe('You are not logged in! Please log in to get access.')
+
+            expect (reslogin.body.data.user.role).toBe('user')
+            expect (reslogin.body.data.user.email).toBe(userImport.email.toLowerCase())
+
+
+
         })
 })
 })

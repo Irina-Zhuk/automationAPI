@@ -55,8 +55,8 @@ export function deleteFunction(cookie:string): Promise<any> {
 //то же самое в более простом варианте
 
 export function deleteFunction2(cookie:string) {
-    return  request.post('/users/deleteMe').set("Cookie", cookie)
+    return request.delete('/users/deleteMe').set("Cookie", cookie);
 }
 export function login2(user:string | object | undefined) {
-    return request.post('/users/login').send(user)
+    return request.post('/users/login').send(user);
 }

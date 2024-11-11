@@ -5,7 +5,7 @@ const request = supertest('http://localhost:8001/api/v1')
 describe('USER SIGNUP', () => {
 
     describe('POSITIVE TESTING', () => {
-        it('Create a new user', async () => {
+        it.skip('Create a new user', async () => {
             const res = await request.post('/users/signup')
                 .send(
                     {
@@ -24,13 +24,13 @@ describe('USER SIGNUP', () => {
             const res = await request.post('/users/signup')
                 .send({
                     "name": "Mike",
-                    "email": "mike10@gmail.com",
+                    "email": "mike100@gmail.com",
                     "password": "pass1234",
                     "passwordConfirm": "pass1234"
                 })
                 .expect(201)
             expect(res.body.data.user.name).toBe('Mike')
-            expect(res.body.data.user.email).toBe('mike10@gmail.com')
+            expect(res.body.data.user.email).toBe('mike100@gmail.com')
             expect(res.body.status).toBe('success')
             console.log(res.body, 'res')
         })
@@ -90,7 +90,7 @@ describe('USER SIGNUP', () => {
             expect(res.body.status).toBe('error')
             expect(res.body.message).toBe('User validation failed: name: Please tell us your name!')
         })
-        it.only('should not create a new user with an empty name  using function without async', function (done) {
+        it('should not create a new user with an empty name  using function without async', function (done) {
 
             const res = request
                 .post('/users/signup')

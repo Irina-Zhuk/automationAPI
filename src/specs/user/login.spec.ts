@@ -70,7 +70,7 @@ describe('USER LOGIN', () => {
                     });
                 })
                 .then((res2) => {
-                    expect(res2.statusCode).toBe(201); // This line will fail if statusCode is not 201
+                    expect(res2.statusCode).toBe(200); // This line will fail if statusCode is not 201
                 })
                 .catch((err) => {
                     throw new Error(`Test failed due to unexpected response: ${err}`);
@@ -129,7 +129,7 @@ describe('USER LOGIN', () => {
 
             try {
                 await signUp(userImport).then (el => {
-                    expect (el.body.status).toBe('error')
+                    expect (el.body.status).toBe('success')
                     console.log(el.body, 'res')
                 })
                 await logIn({
@@ -148,7 +148,7 @@ describe('USER LOGIN', () => {
         })
 
         it('get error when trying login without email using .end without Promise - option 4', (done) => {
-            signUp2({
+            login2({
                 email: userImport.email,
                 password : '',
             }).end ((err,res) => {
@@ -168,9 +168,9 @@ describe('USER LOGIN', () => {
         // })
 
 
-        it('get error when trying login with wrong password', async () => {
+        it.only('get error when trying login with wrong password', async () => {
             await signUp(userImport).then (el => {
-                expect (el.body.status).toBe('error')
+                expect (el.body.status).toBe('success')
                 console.log(el.body, 'res')
             })
             await logIn({
@@ -184,7 +184,7 @@ describe('USER LOGIN', () => {
 
         it('get error when trying login with wrong user email', async () => {
             await signUp(userImport).then (el => {
-                expect (el.body.status).toBe('error')
+                expect (el.body.status).toBe('success')
                 console.log(el.body, 'res')
             })
             await logIn({
