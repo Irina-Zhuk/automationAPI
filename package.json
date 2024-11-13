@@ -7,7 +7,8 @@
     "signUp1": "npx jest post.spec.ts",
     "logIn": "npx jest login.spec.ts",
     "logIn2": "npx jest login2.spec.ts",
-    "mongo": "npx jest mongo.spec.ts"
+    "mongo": "npx jest mongo.spec.ts",
+    "tour": "npx jest createTour.spec.ts"
   },
   "keywords": [],
   "author": "",

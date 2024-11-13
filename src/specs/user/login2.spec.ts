@@ -5,7 +5,7 @@ const request = supertest('http://localhost:8001/api/v1')
 describe('USER LOGIN', () => {
 
     describe('POSITIVE TESTING', () => {
-        let userImport = getUser();
+        let userImport = getUser('user');
         let cookie: string
         beforeEach (async() => {
             await signUp(userImport)
@@ -38,7 +38,7 @@ describe('USER LOGIN', () => {
         })
 
     describe('NEGATIVE TESTING', () => {
-        let userImport = getUser();
+        let userImport = getUser('user');
         let cookie: string
         beforeEach (async() => {
             await signUp(userImport)
@@ -84,11 +84,11 @@ describe('USER LOGIN', () => {
             }
         })
 
-        it('cannot delete user with invalid token - option 3 - using .end without Promise',  (done) => {
-            deleteFunction2("123").end ((err,res) => {
+        it.only('cannot delete user with invalid token - option 3 - using .end without Promise',  (done) => {
+            deleteFunction2("jwt=123").end ((err,res) => {
                 if(err) return done (err)
                 expect (res.body.status).toBe('fail');
-                expect (res.body.message).toBe("You are not logged in! Please log in to get access.")
+                expect (res.body.message).toBe("Invalid token. Please log in again.")
                 done()
 
             })

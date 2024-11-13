@@ -32,7 +32,7 @@ const DATABASE_URL = "mongodb+srv://irinamzh:Updated1234@cluster0.lvzg3fs.mongod
          console.log(user, "===========user==========")
      })
      it ("Verify that user was deleted in MongoDB", async() => {
-         const userImport = getUser()
+         const userImport = getUser("user")
          try{
          const res = await signUp(userImport)
          console.log(res.body, '========res========')

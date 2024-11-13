@@ -8,14 +8,15 @@ export const user : User = {
     "password": password,
     "passwordConfirm": password
 }
-export function getUser () :User  {
+export function getUser (role : string) :User  {
     const randomUser  = createRandomUser();
     let password = faker.internet.password();
     return {
-        "name": faker.internet.userName(),
-        "email": faker.internet.email(),
-        "password": password,
-        "passwordConfirm": password
+        name: faker.internet.userName(),
+        email: faker.internet.email(),
+        password: password,
+        passwordConfirm: password,
+        role : role
     }
 
 }

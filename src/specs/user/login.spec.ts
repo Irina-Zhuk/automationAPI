@@ -3,10 +3,10 @@ import {signUp, logIn, signUp2, login2} from "../../data/helpers";
 import {user, getUser} from '../../data/user';
 const request = supertest('http://localhost:8001/api/v1')
 describe('USER LOGIN', () => {
-    let userImport = getUser();
+    let userImport = getUser("user");
 
     describe('POSITIVE TESTING', () => {
-        let userImport = getUser();
+        let userImport = getUser("user");
 
         it.skip('login user', async () => {
             // const res = await request.post('/users/signup').send(userImport)
@@ -89,7 +89,7 @@ describe('USER LOGIN', () => {
 })
 
     describe('NEGATIVE TESTING', () => {
-        let userImport = getUser();
+        let userImport = getUser("user");
 
         it('get error when trying login without email - option 1', async () => {
             await signUp(userImport).then (el => {
