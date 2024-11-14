@@ -60,3 +60,15 @@ export function deleteFunction2(cookie:string) {
 export function login2(user:string | object | undefined) {
     return request.post('/users/login').send(user);
 }
+
+export function tourFunction(cookie:string, ): Promise<any> {
+    return new Promise ((resolve, reject) => {
+        request
+            .post('/tour')
+            .send (user)
+            .end((err, res) => {
+                if (err) return reject(err);
+                else resolve(res);
+            });
+    });
+}

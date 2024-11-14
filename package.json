@@ -8,7 +8,8 @@
     "logIn": "npx jest login.spec.ts",
     "logIn2": "npx jest login2.spec.ts",
     "mongo": "npx jest mongo.spec.ts",
-    "tour": "npx jest createTour.spec.ts"
+    "tour": "npx jest createTour.spec.ts",
+    "review": "npx jest tourReview.spec.ts"
   },
   "keywords": [],
   "author": "",

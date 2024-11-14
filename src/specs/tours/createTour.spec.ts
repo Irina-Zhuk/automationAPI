@@ -1,12 +1,17 @@
 import * as supertest from 'supertest'
 import {getUser} from "../../data/user";
-import {tour, tourValidationsFields, tourWithoutReqFields} from "../../data/tour";
+import {
+    tour,
+    tourFakersFields, tourValidationsFieldNameLessThan10,
+    tourValidationsFieldNameMoreThan40, tourValidationsFieldRatingAverage,
+    tourWithoutReqFields
+} from "../../data/tour";
 import {signUp} from "../../data/helpers";
 const request = supertest('http://localhost:8001/api/v1')
 
 describe('TOURS', () => {
     describe ('Positive Testing', () => {
-    it.skip ('Create Tour', async () => {
+    it ('Create Tour', async () => {
         let userImport = getUser("admin");
         const res = await signUp(userImport)
         console.log(res.body, "res")
@@ -95,6 +100,24 @@ describe('TOURS', () => {
                 console.log("Error during createTour", error)
             }
         })
+        it ('create tour using faker data', async () => {
+            let userImport = getUser("admin");
+            let tourImport = tourFakersFields();
+            const res = await signUp(userImport)
+            console.log(res.body, "res")
+            expect(res.body.status).toBe('success')
+            const cookie = res.headers['set-cookie']
+            await request
+                .post('/tours')
+                .set('Cookie', cookie)
+                .send (tourImport)
+                .then ((el) => {
+                    console.log(el.body, "res")
+                    console.log("resLocation", el.body.data.data.locations)
+                    expect(el.body.status).toBe('success')
+
+                })
+        })
     })
     describe ('Negative Testing', () => {
         it ('cannot create tour with incorrect role ', async () => {
@@ -133,9 +156,9 @@ describe('TOURS', () => {
         })
 
         //validation fails
-        it.only ('cannot create tour when validation is not met', async () => {
+            it ('cannot create tour when name length is less than 10', async () => {
             let userImport = getUser("admin");
-            let tourImport = tourValidationsFields();
+            let tourImport = tourValidationsFieldNameLessThan10();
             const res = await signUp(userImport)
             console.log(res.body, "res")
             expect(res.body.status).toBe('success')
@@ -146,7 +169,45 @@ describe('TOURS', () => {
                 .send (tourImport)
                 .then ((el) => {
                     console.log(el.body, "res")
-                    expect(el.body.status).toBe('success')
+                    expect(el.body.status).toBe('error')
+                    expect(el.body.message).toBe('Tour validation failed: name: A tour name must have more or equal then 10 characters')
+
+                })
+        })
+
+            it.only ('cannot create tour when name length is more than 40', async () => {
+                let userImport = getUser("admin");
+                let tourImport = tourValidationsFieldNameMoreThan40();
+                const res = await signUp(userImport)
+                console.log(res.body, "res")
+                expect(res.body.status).toBe('success')
+                const cookie = res.headers['set-cookie']
+                await request
+                    .post('/tours')
+                    .set('Cookie', cookie)
+                    .send (tourImport)
+                    .then ((el) => {
+                        console.log(el.body, "res")
+                        expect(el.body.status).toBe('error')
+                        expect(el.body.message).toBe('Tour validation failed: name: A tour name must have less or equal then 40 characters')
+
+                })
+        })
+        it.only ('cannot create tour when rating average is not validated', async () => {
+            let userImport = getUser("admin");
+            let tourImport = tourValidationsFieldRatingAverage();
+            const res = await signUp(userImport)
+            console.log(res.body, "res")
+            expect(res.body.status).toBe('success')
+            const cookie = res.headers['set-cookie']
+            await request
+                .post('/tours')
+                .set('Cookie', cookie)
+                .send (tourImport)
+                .then ((el) => {
+                    console.log(el.body, "res")
+                    expect(el.body.status).toBe('error')
+                    expect(el.body.message).toBe('Tour validation failed: name: A tour name must have less or equal then 40 characters')
 
                 })
         })

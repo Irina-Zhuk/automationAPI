@@ -45,7 +45,7 @@ describe('USER SIGNUP', () => {
         })
 
         it('Create a new user using faker and function', function (done) {
-            let userImport = getUser()
+            let userImport = getUser("user")
             const res = request
                 .post('/users/signup')
                 .send(userImport)
