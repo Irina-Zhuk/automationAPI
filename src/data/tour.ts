@@ -50,7 +50,7 @@ export function tourFakersFields(){
         summary: faker.lorem.word({length:{min:10, max:200}}),
         difficulty: difficulty(),
         price: faker.number.int(50000),
-        rating: faker.number.float({ min: 1, max: 100, fractionDigits: 1 }),
+        rating: faker.number.float({ min: 1, max: 5, fractionDigits: 1 }),
         imageCover: imageCover(),
         ratingsAverage: getRatingsAverage(),
         guides: [],

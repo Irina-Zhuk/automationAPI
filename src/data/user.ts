@@ -9,10 +9,10 @@ export const user : User = {
     "passwordConfirm": password
 }
 export function getUser (role : string) :User  {
-    const randomUser  = createRandomUser();
+    // const randomUser  = createRandomUser();
     let password = faker.internet.password();
     return {
-        name: faker.internet.userName(),
+        name: faker.internet.userName() + faker.string.uuid(),
         email: faker.internet.email(),
         password: password,
         passwordConfirm: password,
