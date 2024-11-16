@@ -172,7 +172,83 @@ describe('REVIEW', () => {
                             // reviewId = el.body.data.data._id
                         })
                 })
-                it.only("cannot create review when missing userId", async () => {
+                // it.only("cannot create review when missing userId", async () => {
+                //     let cookie
+                //     let userId
+                //     let tourId
+                //     let reviewId = ""
+                //     const userImport = getUser('admin');
+                //     const tourImport = tour()
+                //
+                //     await signUp(userImport)
+                //         .then((el) => {
+                //             console.log(el.body, "____resUser______")
+                //             expect(el.body.status).toBe('success')
+                //             cookie = el.headers['set-cookie']
+                //             userId = el.body.data.user._id
+                //         })
+                //     await tourFunction(cookie, tourImport)
+                //         .then((el) => {
+                //             console.log(el.body, "____resTour_____")
+                //             expect(el.body.status).toBe('success')
+                //             tourId = el.body.data.data._id
+                //             console.log(tourId, "tourId____resTour_____")
+                //         })
+                //
+                //     // pass reviewName and reviewRating as params to reviewFunction
+                //     const reviewName = "My new Tour Review"
+                //     const reviewRating = 2
+                //     await reviewFunction(cookie, tourId, userId = "", reviewName, reviewRating)
+                //         .then((el) => {
+                //             console.log(el.body, "___resReview____")
+                //             expect(el.body.status).toBe('success')
+                //             expect(el.body.data.data.tour).toBe(tourId)
+                //             expect(el.body.data.data.user).toBe(userId)
+                //             expect(el.body.data.data.review).toBe(reviewName)
+                //             expect(el.body.data.data.rating).toBe(reviewRating)
+                //             reviewId = el.body.data.data._id
+                //         })
+                //
+                // })
+                it("cannot create review when missing tourId", async () => {
+                    let cookie
+                    let userId
+                    let tourId
+                    let reviewId = ""
+                    const userImport = getUser('admin');
+                    const tourImport = tour()
+
+                        await signUp(userImport)
+                            .then((el) => {
+                                console.log(el.body, "____resUser______")
+                                expect(el.body.status).toBe('success')
+                                cookie = el.headers['set-cookie']
+                                userId = el.body.data.user._id
+                            })
+                        await tourFunction(cookie, tourImport)
+                            .then((el) => {
+                                console.log(el.body, "____resTour_____")
+                                expect(el.body.status).toBe('success')
+                                tourId = el.body.data.data._id
+                                console.log(tourId, "tourId____resTour_____")
+                            })
+
+                        // pass reviewName and reviewRating as params to reviewFunction
+                        const reviewName = "My new Tour Review"
+                        const reviewRating = 2
+                        await reviewFunction(cookie, tourId ="", userId, reviewName, reviewRating)
+                            .then((el) => {
+                                console.log(el.body, "___resReview____")
+                                expect(el.body.status).toBe('error')
+                                expect(el.body.message).toBe('Review validation failed: tour: Review must belong to a tour')
+                                // expect(el.body.data.data.tour).toBe(tourId)
+                                // expect(el.body.data.data.user).toBe(userId)
+                                // expect(el.body.data.data.review).toBe(reviewName)
+                                // expect(el.body.data.data.rating).toBe(reviewRating)
+                                // reviewId = el.body.data.data._id
+                            })
+                       })
+                it("cannot create review when missing rating", async () => {
                     let cookie
                     let userId
                     let tourId
@@ -197,30 +273,62 @@ describe('REVIEW', () => {
 
                     // pass reviewName and reviewRating as params to reviewFunction
                     const reviewName = "My new Tour Review"
-                    const reviewRating = 2
-                    await reviewFunction(cookie, tourId, userId = "", reviewName, reviewRating)
+                    const reviewRating = null
+                    await reviewFunction(cookie, tourId, userId, reviewName, reviewRating)
                         .then((el) => {
                             console.log(el.body, "___resReview____")
+                            expect(el.body.status).toBe('error')
+                            // expect(el.body.data.data.tour).toBe(tourId)
+                            // expect(el.body.data.data.user).toBe(userId)
+                            // expect(el.body.data.data.review).toBe(reviewName)
+                            // expect(el.body.data.data.rating).toBe(reviewRating)
+                            // reviewId = el.body.data.data._id
+                        })
+                })
+
+
+                it("cannot create review when missing reviewName", async () => {
+                    let cookie
+                    let userId
+                    let tourId
+                    let reviewId = ""
+                    const userImport = getUser('admin');
+                    const tourImport = tour()
+
+                    await signUp(userImport)
+                        .then((el) => {
+                            console.log(el.body, "____resUser______")
                             expect(el.body.status).toBe('success')
-                            expect(el.body.data.data.tour).toBe(tourId)
-                            expect(el.body.data.data.user).toBe(userId)
-                            expect(el.body.data.data.review).toBe(reviewName)
-                            expect(el.body.data.data.rating).toBe(reviewRating)
-                            reviewId = el.body.data.data._id
+                            cookie = el.headers['set-cookie']
+                            userId = el.body.data.user._id
+                        })
+                    await tourFunction(cookie, tourImport)
+                        .then((el) => {
+                            console.log(el.body, "____resTour_____")
+                            expect(el.body.status).toBe('success')
+                            tourId = el.body.data.data._id
+                            console.log(tourId, "tourId____resTour_____")
                         })
 
+                    // pass reviewName and reviewRating as params to reviewFunction
+                    const reviewName = ""
+                    const reviewRating = 3
+                    await reviewFunction(cookie, tourId, userId, reviewName, reviewRating)
+                        .then((el) => {
+                            console.log(el.body, "___resReview____")
+                            expect(el.body.status).toBe('error')
+                            expect(el.body.message).toBe ('Review validation failed: review: Review cannot be empty')
+                            // expect(el.body.data.data.tour).toBe(tourId)
+                            // expect(el.body.data.data.user).toBe(userId)
+                            // expect(el.body.data.data.review).toBe(reviewName)
+                            // expect(el.body.data.data.rating).toBe(reviewRating)
+                            // reviewId = el.body.data.data._id
+                        })
                 })
-                it("cannot create review when missing tourId", async () => {
-
-                })
-                it("cannot create review when missing rating", async () => {
-
-                it("cannot create review when missing review", async () => {
-
-                })
-                })
+            })
         })
     })
+
 
 
 
