@@ -210,7 +210,14 @@ describe('REVIEW', () => {
                         })
 
                 })
-                it("cannot create review when missing tourId", async () => {})
+                it("cannot create review when missing tourId", async () => {
+
+                })
+                it("cannot create review when missing rating", async () => {
+
+                it("cannot create review when missing review", async () => {
+
+                })
                 })
         })
     })
