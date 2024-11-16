@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 export function tour(){
     return {
-        name: faker.lorem.word({length:{min:10, max:20}}),
+        name: faker.lorem.word({length:{min:10, max:20}}) + faker.string.uuid().slice(1, 10),
         duration: 10,
         description: "Could be",
         maxGroupSize: 10,
