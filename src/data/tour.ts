@@ -102,7 +102,7 @@ function getRatingsAverage() {
 export function tourValidationsFieldNameMoreThan40(){
     return {
 
-        name: faker.number.int({ min: 41, max: 500 }),
+        name: faker.string.alpha({ length: faker.number.int({ min: 41, max: 500 }) }),
         duration: faker.number.int(200),
         description: faker.lorem.word({length:{min:10, max:40}}),
         maxGroupSize: faker.number.int(200),
@@ -124,7 +124,7 @@ export function tourValidationsFieldNameMoreThan40(){
 export function tourValidationsFieldNameLessThan10(){
     return {
 
-        name: faker.number.int({ min: 0, max: 9 }),
+        name: faker.string.alpha({ length: faker.number.int({ min: 1, max: 9 }) }),
         duration: faker.number.int(200),
         description: faker.lorem.word({length:{min:10, max:40}}),
         maxGroupSize: faker.number.int(200),
@@ -143,10 +143,10 @@ export function tourValidationsFieldNameLessThan10(){
         },
     }
 }
-export function tourValidationsFieldRatingAverage(){
+export function tourValidationsFieldRatingAverageUndefined(){
     return {
 
-        name: faker.number.int({ min: 0, max: 9 }),
+        name: faker.lorem.word({length:{min:10, max:40}}),
         duration: faker.number.int(200),
         description: faker.lorem.word({length:{min:10, max:40}}),
         maxGroupSize: faker.number.int(200),
@@ -155,7 +155,7 @@ export function tourValidationsFieldRatingAverage(){
         price: faker.number.int(50000),
         rating: faker.number.float({ min: 1, max: 100, fractionDigits: 1 }),
         imageCover: imageCover(),
-        ratingsAverage: getRatingsAverage(),
+        ratingsAverage: null,
         guides: [],
         startDates: [faker.date.future({years:1})],
         startLocation: {

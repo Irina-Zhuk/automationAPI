@@ -248,6 +248,7 @@ describe('REVIEW', () => {
                                 // reviewId = el.body.data.data._id
                             })
                        })
+                // ===== it failed because the review is successfully created without rating =====
                 it("cannot create review when missing rating", async () => {
                     let cookie
                     let userId
@@ -278,11 +279,7 @@ describe('REVIEW', () => {
                         .then((el) => {
                             console.log(el.body, "___resReview____")
                             expect(el.body.status).toBe('error')
-                            // expect(el.body.data.data.tour).toBe(tourId)
-                            // expect(el.body.data.data.user).toBe(userId)
-                            // expect(el.body.data.data.review).toBe(reviewName)
-                            // expect(el.body.data.data.rating).toBe(reviewRating)
-                            // reviewId = el.body.data.data._id
+
                         })
                 })
 
@@ -310,7 +307,6 @@ describe('REVIEW', () => {
                             console.log(tourId, "tourId____resTour_____")
                         })
 
-                    // pass reviewName and reviewRating as params to reviewFunction
                     const reviewName = ""
                     const reviewRating = 3
                     await reviewFunction(cookie, tourId, userId, reviewName, reviewRating)
